@@ -1,0 +1,108 @@
+<form class="form" name="mainForm" [formGroup]="form" novalidate>
+  <h1 style = "font-size: 25px">Редактирование данных абонента</h1>
+<div id="main">
+  <div class="column column1">
+    <h1>Старые данные:</h1>
+
+        <mat-form-field>
+          <input type="text" matInput name="surnameRes" placeholder="Фамилия" [value] = "list.surname" disabled>
+          <mat-icon matSuffix (click) = "click(list.surname, form, 'surname')">content_copy</mat-icon>
+        </mat-form-field><br>   
+          
+        <mat-form-field *ngIf = "list.docType">
+        <mat-select placeholder = "Тип документа" [value]="list.docType.id" disabled>
+          <mat-option [value]="list.docType.id">
+            {{list.docType.type}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    
+        <mat-form-field>
+          <input type="text" matInput name="countryRes" placeholder="Страна выдачи" [value] = "list.country" disabled>
+          <mat-icon matSuffix (click) = "click(list.country, form, 'country')">content_copy</mat-icon>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <input type="text" matInput name="dateRes" placeholder="Дата выдачи" [value] = "list.date" disabled>
+          <mat-icon matSuffix (click) = "click(list.date, form, 'date')">content_copy</mat-icon>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <input type="text" matInput name="seriesRes" placeholder="Серия и номер" [value] = "list.series" disabled>
+          <mat-icon matSuffix (click) = "click(list.series, form, 'series')">content_copy</mat-icon>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <input type="text" matInput name="codeRes" placeholder="Код подразделения" [value] = "list.code" disabled>
+          <mat-icon matSuffix (click) = "click(list.code, form, 'code')">content_copy</mat-icon>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <textarea matTextareaAutosize matInput name="organRes" placeholder="Орган, выдавший документ" [value] = "list.organ" disabled></textarea>
+          <mat-icon matSuffix (click) = "click(list.organ, form, 'organ')">content_copy</mat-icon>
+        </mat-form-field><br>
+
+        <mat-form-field>
+          <input type="text" matInput name="addressRes" placeholder="Адрес регистрации" [value] = "list.address" disabled>
+          <mat-icon matSuffix (click) = "click(list.address, form, 'address')">content_copy</mat-icon>
+        </mat-form-field><br>
+  </div>
+  
+  <div class="column column2">
+
+    <h1>Изменить на:</h1>
+    
+    <mat-form-field>
+      <input type="text" matInput name="surname" placeholder="Фамилия" formControlName="surname">
+      <mat-error *ngIf="form.controls.surname.invalid">Введите фамилию русскими буквами</mat-error>
+    </mat-form-field><br>   
+      
+    <mat-form-field>
+      <mat-select placeholder="Тип документа" formControlName="select">
+        <mat-option *ngFor="let doc of typeDocs" [value]='doc.id'>
+          {{ doc.type }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.controls.select.invalid">Выберите тип документа</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="text" matInput name="country" placeholder="Страна выдачи" formControlName="country">
+      <mat-error *ngIf="form.controls.country.invalid">Введите страну выдачи русскими буквами</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field>
+      <input type="text" matInput name="date" placeholder="Дата выдачи" formControlName="date" [textMask]="{mask: dateMask}">
+      <mat-error *ngIf="form.controls.date.invalid">Введите дату выдачи в формате дд.мм.гггг</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field>
+      <input type="text" matInput name="series" placeholder="Серия и номер" formControlName="series" [textMask]="{mask: seriesMask}">
+      <mat-error *ngIf="form.controls.series.invalid">Введите серию и номер в формате xxxx-xxxxxx</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field>
+      <input type="text" matInput name="code" placeholder="Код подразделения" formControlName="code">
+      <mat-error *ngIf="form.controls.code.invalid">Введите код подразделения числом</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field>
+      <textarea matTextareaAutosize matInput name="organ" placeholder="Орган, выдавший документ" formControlName="organ"></textarea>
+      <mat-error *ngIf="form.controls.organ.invalid">Введите наименование органа, выдавшего документ</mat-error>
+    </mat-form-field><br>
+
+    <mat-form-field>
+      <input type="text" matInput name="address" placeholder="Адрес регистрации" formControlName="address">
+      <mat-error *ngIf="form.controls.address.invalid">Введите адрес регистрации</mat-error>
+    </mat-form-field><br>			
+  </div>		
+</div>
+
+<button mat-raised-button (click) = "show = true">ПРЕРВАТЬ СЦЕНАРИЙ</button>
+<button type="submit" routerLink="/next" style="color: white" mat-raised-button color="primary" [disabled] = "form.invalid">ДОБАВИТЬ В КОРЗИНУ</button>
+
+<div id='msg' *ngIf = "show">
+  <output>СЦЕНАРИЙ ПРЕРВАН</output>
+</div>
+
+</form>
